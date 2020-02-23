@@ -1,7 +1,13 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import models
+from django.contrib.auth.models import User
+from tinymce.models import HTMLField
+import datetime as dt
+from django.db.models import Q
+
+Priority=(
+    ('Informational', 'Informational'),
+    ('High Priority', 'High Priority'),
+)
 
 # Create your models here.
 class Neighbourhood(models.Model):
@@ -25,8 +31,8 @@ class Neighbourhood(models.Model):
     def update_neighbourhood(self, neighbourhood_name):
         self.neighbourhood_name = neighbourhood_name
         self.save()
-        
-        
+
+
 class notifications(models.Model):
     title = models.CharField(max_length=100)
     notification = HTMLField()
@@ -37,9 +43,9 @@ class notifications(models.Model):
     post_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title     
-    
-    
+        return self.title
+
+
 class healthservices(models.Model):
     healthservices = models.CharField(max_length=100)
 
@@ -51,9 +57,9 @@ class healthservices(models.Model):
 
     @classmethod
     def delete_healthservices(cls, healthservices):
-        cls.objects.filter(healthservices=healthservices).delete()   
-        
-        
+        cls.objects.filter(healthservices=healthservices).delete()
+
+
 class Business(models.Model):
     logo = models.ImageField(upload_to='businesslogo/')
     description = HTMLField()
@@ -65,9 +71,9 @@ class Business(models.Model):
     contact = models.IntegerField()
 
     def __str__(self):
-        return self.name  
-    
-    
+        return self.name
+
+
 class Health(models.Model):
     logo = models.ImageField(upload_to='healthlogo/')
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE)
@@ -78,9 +84,9 @@ class Health(models.Model):
     healthservices = models.ManyToManyField(healthservices)
 
     def __str__(self):
-        return self.name  
-    
-    
+        return self.name
+
+
 class Authorities(models.Model):
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
@@ -89,10 +95,9 @@ class Authorities(models.Model):
     address = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name      
-    
-    
-    
+        return self.name
+
+
 class Profile(models.Model):
     avatar = models.ImageField(upload_to='avatars/', blank = True)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -102,10 +107,9 @@ class Profile(models.Model):
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name   
-    
-    
-    
+        return self.name
+
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=150)
     image = models.ImageField(upload_to='post/')
@@ -121,9 +125,9 @@ class BlogPost(models.Model):
     def search_blogpost(cls, search_term):
         blogs = cls.objects.filter(Q (username__username=search_term) | Q (neighbourhood__neighbourhood=search_term) | Q (title__icontains=search_term))
         return blogs
-    
-    
- class Comment(models.Model):
-        comment = models.CharField(max_length=300)
+
+
+class Comment(models.Model):
+    comment = models.CharField(max_length=300)
     username = models.ForeignKey(User, on_delete=models.CASCADE)
-    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)   
+    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
