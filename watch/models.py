@@ -37,4 +37,18 @@ class notifications(models.Model):
     post_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title        
+        return self.title     
+    
+    
+class healthservices(models.Model):
+    healthservices = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.healthservices
+
+    def save_healthservices(self):
+        self.save()
+
+    @classmethod
+    def delete_healthservices(cls, healthservices):
+        cls.objects.filter(healthservices=healthservices).delete()       
