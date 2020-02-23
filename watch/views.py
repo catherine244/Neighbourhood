@@ -1,10 +1,15 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
+from .models import Neighbourhood, healthservices, Business, Health, Authorities, BlogPost, Profile, notifications, Comment
+from .forms import notificationsForm, ProfileForm, BlogPostForm, BusinessForm, CommentForm
+import datetime as datetime
+import json
+from django.db.models import Q
+from django.contrib.auth.models import User
 
 # Create your views here.
-
 def index(request):
     try:
         if not request.user.is_authenticated:
@@ -15,6 +20,7 @@ def index(request):
         return redirect('create-profile')
 
     return render(request, 'index.html')
+
 
 @login_required(login_url='/accounts/login/')
 def notification(request):
@@ -49,7 +55,6 @@ def authorities(request):
 
     return render(request, 'authorities.html', {"authorities":authorities})
 
-
 @login_required(login_url='/accounts/login/')
 def businesses(request):
     current_user = request.user
@@ -77,8 +82,7 @@ def view_blog(request, id):
     else:
         form = CommentForm()
         return render(request, 'view_blog.html', {"blog":blog, "form":form, "comments":comments})
-    
-    
+
 @login_required(login_url='/accounts/login/')
 def my_profile(request):
     current_user = request.user
@@ -91,7 +95,7 @@ def user_profile(request, username):
     user = User.objects.get(username = username)
     profile = Profile.objects.get(username = user)
 
-    return render(request, 'user_profile.html', {"profile":profile})  
+    return render(request, 'user_profile.html', {"profile":profile})
 
 @login_required(login_url='/accounts/login/')
 def create_profile(request):
@@ -106,7 +110,7 @@ def create_profile(request):
 
     else:
         form = ProfileForm()
-    return render(request, 'profile_form.html', {"form":form})  
+    return render(request, 'profile_form.html', {"form":form})
 
 @login_required(login_url='/accounts/login/')
 def update_profile(request):
@@ -127,9 +131,8 @@ def update_profile(request):
     else:
         form = ProfileForm()
 
-    return render(request, 'update_profile.html', {"form":form}
-                  
-                  
+    return render(request, 'update_profile.html', {"form":form})
+
 @login_required(login_url='/accounts/login/')
 def new_blogpost(request):
     current_user = request.user
@@ -148,9 +151,8 @@ def new_blogpost(request):
     else:
         form = BlogPostForm()
 
-    return render(request, 'blogpost_form.html', {"form":form})  
-    
-    
+    return render(request, 'blogpost_form.html', {"form":form})
+
 @login_required(login_url='/accounts/login/')
 def new_business(request):
     current_user = request.user
@@ -169,9 +171,8 @@ def new_business(request):
     else:
         form = BusinessForm()
 
-    return render(request, 'business_form.html', {"form":form})   
-    
-    
+    return render(request, 'business_form.html', {"form":form})
+
 @login_required(login_url='/accounts/login/')
 def new_notification(request):
     current_user = request.user
@@ -193,9 +194,8 @@ def new_notification(request):
     else:
         form = notificationsForm()
 
-    return render(request, 'notifications_form.html', {"form":form})   
-    
-    
+    return render(request, 'notifications_form.html', {"form":form})
+
 @login_required(login_url='/accounts/login/')
 def search_results(request):
     if 'blog' in request.GET and request.GET["blog"]:
@@ -209,8 +209,4 @@ def search_results(request):
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'search.html', {"message":message})                      
-                  
-    
-    
-    
+        return render(request, 'search.html', {"message":message})
