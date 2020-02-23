@@ -48,3 +48,32 @@ def authorities(request):
     authorities=Authorities.objects.filter(neighbourhood=profile.neighbourhood)
 
     return render(request, 'authorities.html', {"authorities":authorities})
+
+
+@login_required(login_url='/accounts/login/')
+def businesses(request):
+    current_user = request.user
+    profile = Profile.objects.get(username = current_user)
+    businesses = Business.objects.filter(neighbourhood=profile.neighbourhood)
+
+    return render(request, 'businesses.html', {"businesses":businesses})
+
+@login_required(login_url='/accounts/login/')
+def view_blog(request, id):
+  
+    try:
+        comments = Comment.objects.filter(post_id=id)
+    except:
+        comments = []
+
+    blog = BlogPost.objects.get(id=id)
+    if request.method == 'POST':
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.username = request.user
+            comment.post = blog
+            comment.save()
+    else:
+        form = CommentForm()
+        return render(request, 'view_blog.html', {"blog":blog, "form":form, "comments":comments})
