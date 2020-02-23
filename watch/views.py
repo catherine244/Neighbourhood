@@ -32,3 +32,19 @@ def blog(request):
     blogposts = BlogPost.objects.filter(neighbourhood=profile.neighbourhood)
 
     return render(request, 'blog.html', {"blogposts":blogposts})
+
+@login_required(login_url='/accounts/login/')
+def health(request):
+    current_user = request.user
+    profile = Profile.objects.get(username=current_user)
+    healthservices = Health.objects.filter(neighbourhood=profile.neighbourhood)
+
+    return render(request, 'health.html', {"healthservices":healthservices})
+
+@login_required(login_url='/accounts/login/')
+def authorities(request):
+    current_user=request.user
+    profile=Profile.objects.get(username=current_user)
+    authorities=Authorities.objects.filter(neighbourhood=profile.neighbourhood)
+
+    return render(request, 'authorities.html', {"authorities":authorities})
