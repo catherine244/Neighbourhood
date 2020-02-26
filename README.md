@@ -38,3 +38,35 @@ If user has no account, they click on `sign up` | User signs up | User is redire
 | Homepage loads | User inputs in the search form and presses enter | Searched results show |
 
 ![alt text](LN.png)
+
+
+
+
+
+
+## SETUP AND INSTALLATION 
+### Prerequisites
+* python3.6
+* virtual environment
+* pip
+
+### Cloning
+* In your terminal:
+        
+        $ git clone https://github.com/catherine244/Neighbourhood.git
+        $ cd neighbourhood
+
+## Running the Application
+* Install virtual environment using `$ python3.6 -m venv --without-pip virtual`
+* Activate virtual environment using `$ source virtual/bin/activate`
+* Download pip in our environment using `$ curl https://bootstrap.pypa.io/get-pip.py | python`
+* Install all the dependencies from the requirements.txt file by running `python3.6 pip install -r requirements.txt`
+* Create a database and edit the database configurations in `settings.py` to your own credentials.
+* Make migrations
+
+        $ python manage.py makemigrations watch
+        $ python3.6 manage.py migrate 
+
+* To run the application, in your terminal:
+
+        $ python3.6 manage.py runserver
