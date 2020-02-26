@@ -88,7 +88,7 @@ This application is developed using [Python3.6](https://www.python.org/doc/), [D
 
 ## live link 
 
-https://avechigram.herokuapp.com/
+https://cate-neighbourhood.herokuapp.com/
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
