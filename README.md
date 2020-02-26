@@ -82,6 +82,18 @@ This application is developed using [Python3.6](https://www.python.org/doc/), [D
 
 
 
+## Contacts
+**ccayreen24@gmail.com**
+
+
+## live link 
+
+https://avechigram.herokuapp.com/
+
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+
 
 
 
