@@ -1,6 +1,7 @@
 from django.test import TestCase
 from .models import Profile, Neighbourhood
 from django.contrib.auth.models import User
+from watch.models import healthservices
 
 # Create your tests here.
 class ProfileTestClass(TestCase):
