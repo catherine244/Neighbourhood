@@ -70,3 +70,18 @@ If user has no account, they click on `sign up` | User signs up | User is redire
 * To run the application, in your terminal:
 
         $ python3.6 manage.py runserver
+
+
+## Technologies Used
+* Python3.6
+* Django
+* HTML
+* Bootstrap
+
+This application is developed using [Python3.6](https://www.python.org/doc/), [Django](https://www.djangoproject.com/), [HTML](https://getbootstrap.com/) and [Bootstrap](https://getbootstrap.com/)
+
+
+
+
+
+
